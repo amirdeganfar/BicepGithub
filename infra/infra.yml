@@ -1,0 +1,33 @@
+name: Deploy Infra (Bicep)
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'infra/**.bicep'
+      - '.github/workflows/infra.yml'
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+        - uses: actions/checkout@v4
+        - uses: azure/login@v2
+          with:
+            client-id: '6167af4a-247e-4635-8f58-9d37d9109475'
+            tenant-id: '487eb0ce-feeb-4001-9e6a-c378b9a3129b'
+            subscription-id: '487eb0ce-feeb-4001-9e6a-c378b9a3129b'
+        - name: Deploy Bicep
+          uses: azure/arm-deploy@v2
+          with:
+            scope: resourcegroup
+            resourceGroupName: rg-sb-api-dev
+            template: infra/main.bicep
+            parameters: >
+              location=australiaeast
+              namePrefix=demo
+              queueName=work-items
+              sku=F1
+              sbSku=Standard
+            deploymentName: demo-infra-${{ github.run_number }}
