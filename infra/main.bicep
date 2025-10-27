@@ -4,6 +4,7 @@ param queueName string = 'work-items'
 param sku string = 'F1'
 param sbSku string = 'Standard' // Service Bus: Basic|Standard|Premium
 
+var rgName = resourceGroup().name
 var sbNamespaceName = '${namePrefix}-servicebusnamespace'
 var planName = '${namePrefix}-plan'
 var webAppName = '${namePrefix}-api'
