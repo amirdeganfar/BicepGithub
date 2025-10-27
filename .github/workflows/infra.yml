@@ -17,7 +17,7 @@ jobs:
           with:
             client-id: '6167af4a-247e-4635-8f58-9d37d9109475'
             tenant-id: '487eb0ce-feeb-4001-9e6a-c378b9a3129b'
-            subscription-id: '487eb0ce-feeb-4001-9e6a-c378b9a3129b'
+            subscription-id: 'a17bc01c-c027-4232-a1bf-b4525465cb4d'
         - name: Deploy Bicep
           uses: azure/arm-deploy@v2
           with:
