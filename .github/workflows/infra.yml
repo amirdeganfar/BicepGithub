@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - '.github/workflows/infra/**.bicep'
+      - 'infra/**.bicep'
       - '.github/workflows/infra.yml'
 jobs:
   deploy:
