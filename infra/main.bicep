@@ -4,8 +4,7 @@ param queueName string = 'work-items'
 param sku string = 'F1'
 param sbSku string = 'Standard' // Service Bus: Basic|Standard|Premium
 
-var rgName = resourceGroup().name
-var sbNamespaceName='${namePrefix}'
+var sbNamespaceName = namePrefix
 var planName = '${namePrefix}-plan'
 var webAppName = '${namePrefix}-api'
 
@@ -19,7 +18,8 @@ resource sbNamespace 'Microsoft.ServiceBus/namespaces@2024-01-01' = {
 }
 
 resource sbQueue 'Microsoft.ServiceBus/namespaces/queues@2024-01-01' = {
-  name: '${sbNamespace.name}/${queueName}'
+  parent: sbNamespace
+  name: queueName
   properties: {
     enablePartitioning: true
     lockDuration: 'PT30S'
@@ -28,7 +28,8 @@ resource sbQueue 'Microsoft.ServiceBus/namespaces/queues@2024-01-01' = {
 }
 
 resource sbAuth 'Microsoft.ServiceBus/namespaces/AuthorizationRules@2024-01-01' = {
-  name: '${sbNamespace.name}/SendListen'
+  parent: sbNamespace
+  name: 'SendListen'
   properties: {
     rights: [
       'Send'
@@ -37,7 +38,6 @@ resource sbAuth 'Microsoft.ServiceBus/namespaces/AuthorizationRules@2024-01-01' 
   }
 }
 
-@secure()
 var sbConn = listKeys(resourceId('Microsoft.ServiceBus/namespaces/AuthorizationRules', sbNamespace.name, sbAuth.name), '2024-01-01').primaryConnectionString
 
 resource plan 'Microsoft.Web/serverfarms@2024-11-01' = {
