@@ -26,7 +26,7 @@ jobs:
             template: infra/main.bicep
             parameters: >
               location=australiaeast
-              namePrefix=demo1
+              namePrefix=demo
               queueName=work-items
               sku=F1
               sbSku=Standard
