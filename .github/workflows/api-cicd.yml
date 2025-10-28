@@ -14,7 +14,7 @@ jobs:
       id-token: write
       contents: read
     env:
-        WEBAPP_NAME: demo-api   # must match output in Bicep (namePrefix-api)
+        WEBAPP_NAME: demo-api   #must match output in Bicep (namePrefix-api)
         DOTNET_VERSION: '8.0.x'
     steps:
       - uses: actions/checkout@v4
