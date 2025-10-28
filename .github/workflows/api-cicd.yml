@@ -3,7 +3,7 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - 'src/Api/**'
+      - 'BicepGithub/**'
       - '.github/workflows/api-cicd.yml'
   workflow_dispatch:
     
@@ -23,7 +23,7 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
         
       - name: Restore, Build, Publish
-        working-directory: src/Api
+        working-directory: BicepGithub
         run: |
           dotnet restore
           dotnet build --configuration Release --no-restore
@@ -40,4 +40,4 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ env.WEBAPP_NAME }}
-          package: src/Api/out
+          package: BicepGithub/out
